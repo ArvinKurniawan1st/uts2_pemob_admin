@@ -22,6 +22,19 @@ class ApiService {
     return jsonDecode(res.body);
   }
 
+  static Future<List<dynamic>> getOrderItems(int orderId) async {
+    final res = await http.get(
+      Uri.parse('$baseUrl/orders/$orderId/items'),
+    );
+
+    if (res.statusCode != 200) {
+      throw Exception('Gagal mengambil order items');
+    }
+
+    return jsonDecode(res.body);
+  }
+
+
   static Future<void> approveOrder(int id) async {
     await http.put(Uri.parse('$baseUrl/orders/$id/approve'));
   }

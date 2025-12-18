@@ -104,9 +104,9 @@ class _LoginAdminState extends State<LoginAdmin> {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Colors.deepPurple.shade900,
-              Colors.deepPurple.shade700,
-              Colors.purple.shade600,
+              Colors.blue.shade900,
+              Colors.blue.shade700,
+              Colors.blue.shade500,
             ],
           ),
         ),
@@ -127,6 +127,13 @@ class _LoginAdminState extends State<LoginAdmin> {
                         color: Colors.white.withOpacity(0.3),
                         width: 3,
                       ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.blue.shade900.withOpacity(0.3),
+                          blurRadius: 20,
+                          offset: const Offset(0, 10),
+                        ),
+                      ],
                     ),
                     child: const Icon(
                       Icons.admin_panel_settings,
@@ -143,11 +150,11 @@ class _LoginAdminState extends State<LoginAdmin> {
                       vertical: 8,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.amber.shade600,
+                      color: Colors.lightBlue.shade600,
                       borderRadius: BorderRadius.circular(20),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.amber.shade600.withOpacity(0.4),
+                          color: Colors.lightBlue.shade600.withOpacity(0.4),
                           blurRadius: 12,
                           offset: const Offset(0, 4),
                         ),
@@ -187,7 +194,7 @@ class _LoginAdminState extends State<LoginAdmin> {
                     'Masuk dengan akun administrator',
                     style: TextStyle(
                       fontSize: 16,
-                      color: Colors.white.withOpacity(0.8),
+                      color: Colors.white.withOpacity(0.9),
                     ),
                   ),
                   const SizedBox(height: 50),
@@ -214,20 +221,27 @@ class _LoginAdminState extends State<LoginAdmin> {
                           keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
                             labelText: 'Email Admin',
-                            prefixIcon: Icon(Icons.email_outlined, color: Colors.deepPurple.shade700),
+                            labelStyle: TextStyle(color: Colors.blue.shade700),
+                            prefixIcon: Icon(
+                              Icons.email_outlined,
+                              color: Colors.blue.shade700,
+                            ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide(color: Colors.grey.shade300),
+                              borderSide: BorderSide(color: Colors.blue.shade200),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide(color: Colors.deepPurple.shade700, width: 2),
+                              borderSide: BorderSide(
+                                color: Colors.blue.shade700,
+                                width: 2,
+                              ),
                             ),
                             filled: true,
-                            fillColor: Colors.grey.shade50,
+                            fillColor: Colors.blue.shade50.withOpacity(0.3),
                           ),
                         ),
                         const SizedBox(height: 16),
@@ -238,7 +252,11 @@ class _LoginAdminState extends State<LoginAdmin> {
                           obscureText: _obscurePassword,
                           decoration: InputDecoration(
                             labelText: 'Password',
-                            prefixIcon: Icon(Icons.lock_outlined, color: Colors.deepPurple.shade700),
+                            labelStyle: TextStyle(color: Colors.blue.shade700),
+                            prefixIcon: Icon(
+                              Icons.lock_outlined,
+                              color: Colors.blue.shade700,
+                            ),
                             suffixIcon: IconButton(
                               icon: Icon(
                                 _obscurePassword
@@ -255,14 +273,17 @@ class _LoginAdminState extends State<LoginAdmin> {
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide(color: Colors.grey.shade300),
+                              borderSide: BorderSide(color: Colors.blue.shade200),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide(color: Colors.deepPurple.shade700, width: 2),
+                              borderSide: BorderSide(
+                                color: Colors.blue.shade700,
+                                width: 2,
+                              ),
                             ),
                             filled: true,
-                            fillColor: Colors.grey.shade50,
+                            fillColor: Colors.blue.shade50.withOpacity(0.3),
                           ),
                         ),
                         const SizedBox(height: 30),
@@ -274,12 +295,14 @@ class _LoginAdminState extends State<LoginAdmin> {
                           child: ElevatedButton(
                             onPressed: _isLoading ? null : login,
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.deepPurple.shade700,
+                              backgroundColor: Colors.blue.shade700,
                               foregroundColor: Colors.white,
+                              disabledBackgroundColor: Colors.blue.shade300,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),
-                              elevation: 3,
+                              elevation: 5,
+                              shadowColor: Colors.blue.shade700.withOpacity(0.5),
                             ),
                             child: _isLoading
                                 ? const SizedBox(
@@ -287,7 +310,9 @@ class _LoginAdminState extends State<LoginAdmin> {
                               width: 20,
                               child: CircularProgressIndicator(
                                 strokeWidth: 2,
-                                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  Colors.white,
+                                ),
                               ),
                             )
                                 : const Row(
@@ -315,17 +340,18 @@ class _LoginAdminState extends State<LoginAdmin> {
                   Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.1),
+                      color: Colors.white.withOpacity(0.15),
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
-                        color: Colors.white.withOpacity(0.2),
+                        color: Colors.white.withOpacity(0.3),
+                        width: 1.5,
                       ),
                     ),
                     child: Row(
                       children: [
                         Icon(
                           Icons.security,
-                          color: Colors.white.withOpacity(0.8),
+                          color: Colors.white.withOpacity(0.9),
                           size: 20,
                         ),
                         const SizedBox(width: 12),
@@ -334,8 +360,40 @@ class _LoginAdminState extends State<LoginAdmin> {
                             'Area terbatas. Hanya untuk administrator.',
                             style: TextStyle(
                               fontSize: 13,
-                              color: Colors.white.withOpacity(0.8),
+                              color: Colors.white.withOpacity(0.9),
                             ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  // Additional Info
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 12,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.info_outline,
+                          color: Colors.white.withOpacity(0.8),
+                          size: 18,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          'Kelola dan approve semua order',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.white.withOpacity(0.8),
                           ),
                         ),
                       ],

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/api_service.dart';
-import 'order_admin_page.dart';
+import 'dashboard_admin_page.dart';
 
 class LoginAdmin extends StatefulWidget {
   const LoginAdmin({super.key});
@@ -68,7 +68,7 @@ class _LoginAdminState extends State<LoginAdmin> {
       if (mounted) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (_) => const OrderAdminPage()),
+          MaterialPageRoute(builder: (_) => const DashboardAdminPage()),
         );
       }
     } catch (e) {
@@ -117,7 +117,6 @@ class _LoginAdminState extends State<LoginAdmin> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Admin Badge
                   Container(
                     padding: const EdgeInsets.all(24),
                     decoration: BoxDecoration(
@@ -143,7 +142,6 @@ class _LoginAdminState extends State<LoginAdmin> {
                   ),
                   const SizedBox(height: 30),
 
-                  // Admin Badge Text
                   Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 20,
@@ -180,7 +178,6 @@ class _LoginAdminState extends State<LoginAdmin> {
 
                   const SizedBox(height: 20),
 
-                  // Welcome Text
                   const Text(
                     'Portal Admin',
                     style: TextStyle(
@@ -199,7 +196,6 @@ class _LoginAdminState extends State<LoginAdmin> {
                   ),
                   const SizedBox(height: 50),
 
-                  // Login Card
                   Container(
                     padding: const EdgeInsets.all(24),
                     decoration: BoxDecoration(
@@ -215,7 +211,6 @@ class _LoginAdminState extends State<LoginAdmin> {
                     ),
                     child: Column(
                       children: [
-                        // Email Field
                         TextField(
                           controller: emailCtrl,
                           keyboardType: TextInputType.emailAddress,
@@ -246,7 +241,6 @@ class _LoginAdminState extends State<LoginAdmin> {
                         ),
                         const SizedBox(height: 16),
 
-                        // Password Field
                         TextField(
                           controller: passCtrl,
                           obscureText: _obscurePassword,
@@ -288,7 +282,6 @@ class _LoginAdminState extends State<LoginAdmin> {
                         ),
                         const SizedBox(height: 30),
 
-                        // Login Button
                         SizedBox(
                           width: double.infinity,
                           height: 54,
@@ -336,7 +329,6 @@ class _LoginAdminState extends State<LoginAdmin> {
                   ),
                   const SizedBox(height: 30),
 
-                  // Security Notice
                   Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
@@ -370,7 +362,6 @@ class _LoginAdminState extends State<LoginAdmin> {
 
                   const SizedBox(height: 20),
 
-                  // Additional Info
                   Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 16,

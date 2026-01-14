@@ -19,13 +19,28 @@ class _DashboardAdminPageState extends State<DashboardAdminPage> {
   String _revenueFilter = 'Semua';
   final currencyFormatter = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
 
+  // Palet warna biru elegan
+  final Color primaryBlue = const Color(0xFF1565C0);
+  final Color deepBlue = const Color(0xFF0D47A1);
+  final Color lightBlue = const Color(0xFF42A5F5);
+  final Color accentBlue = const Color(0xFF2196F3);
+  final Color softBlue = const Color(0xFF64B5F6);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor: const Color(0xFFF5F7FA),
       appBar: AppBar(
-        title: const Text("Dashboard Admin", style: TextStyle(fontWeight: FontWeight.bold)),
-        backgroundColor: Colors.blue.shade900,
+        title: const Text("Dashboard Admin", style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 0.5)),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [deepBlue, primaryBlue],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
         foregroundColor: Colors.white,
         elevation: 0,
         actions: [
@@ -50,18 +65,32 @@ class _DashboardAdminPageState extends State<DashboardAdminPage> {
           const UserAdminPage(),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue.shade900,
-        unselectedItemColor: Colors.grey,
-        type: BottomNavigationBarType.fixed,
-        onTap: (index) => setState(() => _selectedIndex = index),
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_bag), label: 'Orders'),
-          BottomNavigationBarItem(icon: Icon(Icons.inventory), label: 'Products'),
-          BottomNavigationBarItem(icon: Icon(Icons.people), label: 'Users'),
-        ],
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 10,
+              offset: const Offset(0, -2),
+            ),
+          ],
+        ),
+        child: BottomNavigationBar(
+          currentIndex: _selectedIndex,
+          selectedItemColor: primaryBlue,
+          unselectedItemColor: Colors.grey.shade400,
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: Colors.white,
+          elevation: 0,
+          selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w600),
+          onTap: (index) => setState(() => _selectedIndex = index),
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: 'Home'),
+            BottomNavigationBarItem(icon: Icon(Icons.shopping_bag), label: 'Orders'),
+            BottomNavigationBarItem(icon: Icon(Icons.inventory), label: 'Products'),
+            BottomNavigationBarItem(icon: Icon(Icons.people), label: 'Users'),
+          ],
+        ),
       ),
     );
   }
@@ -74,7 +103,7 @@ class _DashboardAdminPageState extends State<DashboardAdminPage> {
       ]),
       builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
+          return Center(child: CircularProgressIndicator(color: primaryBlue));
         }
 
         if (snapshot.hasError) {
@@ -112,19 +141,28 @@ class _DashboardAdminPageState extends State<DashboardAdminPage> {
 
         return RefreshIndicator(
           onRefresh: () async => setState(() {}),
+          color: primaryBlue,
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
             padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text("Ringkasan Bisnis", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                Text(
+                  "Ringkasan Bisnis",
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: deepBlue,
+                    letterSpacing: 0.3,
+                  ),
+                ),
                 const SizedBox(height: 16),
                 Row(
                   children: [
-                    _statCard("Total Client", clientCount.toString(), Colors.blue, Icons.people),
+                    _statCard("Total Client", clientCount.toString(), [const Color(0xFF5E35B1), const Color(0xFF4527A0)], Icons.people),
                     const SizedBox(width: 12),
-                    _statCard("Total Order", orders.length.toString(), Colors.orange, Icons.shopping_cart),
+                    _statCard("Total Order", orders.length.toString(), [const Color(0xFF1E88E5), const Color(0xFF1565C0)], Icons.shopping_cart),
                   ],
                 ),
                 const SizedBox(height: 24),
@@ -132,17 +170,32 @@ class _DashboardAdminPageState extends State<DashboardAdminPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text("Filter Pendapatan", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                    Text(
+                      "Filter Pendapatan",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: deepBlue,
+                      ),
+                    ),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 12),
                       decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.grey.shade300)
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: lightBlue.withOpacity(0.3)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: primaryBlue.withOpacity(0.08),
+                              blurRadius: 8,
+                              offset: const Offset(0, 2),
+                            ),
+                          ]
                       ),
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton<String>(
                           value: _revenueFilter,
+                          style: TextStyle(color: deepBlue, fontWeight: FontWeight.w500),
                           onChanged: (String? newValue) {
                             setState(() { _revenueFilter = newValue!; });
                           },
@@ -159,53 +212,86 @@ class _DashboardAdminPageState extends State<DashboardAdminPage> {
                 _statCard(
                     "Pendapatan (${_revenueFilter})",
                     currencyFormatter.format(totalRevenue),
-                    Colors.green,
+                    [const Color(0xFF00897B), const Color(0xFF00695C)],
                     Icons.monetization_on,
                     fullWidth: true
                 ),
 
                 const SizedBox(height: 32),
-                const Text("Status Pesanan (Total)", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                Text(
+                  "Status Pesanan (Total)",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: deepBlue,
+                  ),
+                ),
                 const SizedBox(height: 16),
 
                 if (orders.isEmpty)
                   const Center(child: Padding(padding: EdgeInsets.all(20), child: Text("Belum ada data order")))
                 else ...[
-                  SizedBox(
-                    height: 200,
-                    child: PieChart(
-                      PieChartData(
-                        sectionsSpace: 2,
-                        centerSpaceRadius: 40,
-                        sections: [
-                          PieChartSectionData(
-                              value: pending == 0 && approved == 0 && rejected == 0 ? 1 : pending.toDouble(),
-                              title: '$pending', color: Colors.orange, radius: 50,
-                              titleStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)
+                  Container(
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: primaryBlue.withOpacity(0.1),
+                          blurRadius: 12,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 200,
+                          child: PieChart(
+                            PieChartData(
+                              sectionsSpace: 3,
+                              centerSpaceRadius: 50,
+                              sections: [
+                                PieChartSectionData(
+                                    value: pending == 0 && approved == 0 && rejected == 0 ? 1 : pending.toDouble(),
+                                    title: '$pending',
+                                    color: const Color(0xFFFF9800),
+                                    radius: 55,
+                                    titleStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16)
+                                ),
+                                PieChartSectionData(
+                                    value: approved.toDouble(),
+                                    title: '$approved',
+                                    color: const Color(0xFF0288D1),
+                                    radius: 55,
+                                    titleStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16)
+                                ),
+                                PieChartSectionData(
+                                    value: rejected.toDouble(),
+                                    title: '$rejected',
+                                    color: const Color(0xFFE53935),
+                                    radius: 55,
+                                    titleStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16)
+                                ),
+                              ],
+                            ),
                           ),
-                          PieChartSectionData(
-                              value: approved.toDouble(), title: '$approved', color: Colors.green, radius: 50,
-                              titleStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)
-                          ),
-                          PieChartSectionData(
-                              value: rejected.toDouble(), title: '$rejected', color: Colors.red, radius: 50,
-                              titleStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)
-                          ),
-                        ],
-                      ),
+                        ),
+                        const SizedBox(height: 24),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            _legendItem("Pending", const Color(0xFFFF9800)),
+                            const SizedBox(width: 20),
+                            _legendItem("Approved", const Color(0xFF0288D1)),
+                            const SizedBox(width: 20),
+                            _legendItem("Rejected", const Color(0xFFE53935)),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      _legendItem("Pending", Colors.orange),
-                      const SizedBox(width: 15),
-                      _legendItem("Approved", Colors.green),
-                      const SizedBox(width: 15),
-                      _legendItem("Rejected", Colors.red),
-                    ],
-                  )
                 ]
               ],
             ),
@@ -215,31 +301,65 @@ class _DashboardAdminPageState extends State<DashboardAdminPage> {
     );
   }
 
-  Widget _statCard(String title, String value, Color color, IconData icon, {bool fullWidth = false}) {
+  Widget _statCard(String title, String value, List<Color> gradientColors, IconData icon, {bool fullWidth = false}) {
     return Expanded(
       flex: fullWidth ? 0 : 1,
       child: Container(
         width: fullWidth ? double.infinity : null,
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: color,
+          gradient: LinearGradient(
+            colors: gradientColors,
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
           borderRadius: BorderRadius.circular(16),
-          boxShadow: [BoxShadow(color: color.withOpacity(0.3), blurRadius: 8, offset: const Offset(0, 4))],
+          boxShadow: [
+            BoxShadow(
+              color: gradientColors[0].withOpacity(0.3),
+              blurRadius: 12,
+              offset: const Offset(0, 6),
+            )
+          ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
-                Icon(icon, color: Colors.white, size: 20),
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Icon(icon, color: Colors.white, size: 20),
+                ),
                 const SizedBox(width: 8),
-                Text(title, style: const TextStyle(color: Colors.white70, fontSize: 12)),
+                Expanded(
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
               ],
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 12),
             FittedBox(
               fit: BoxFit.scaleDown,
-              child: Text(value, style: const TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold)),
+              child: Text(
+                value,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 0.5,
+                ),
+              ),
             ),
           ],
         ),
@@ -250,9 +370,30 @@ class _DashboardAdminPageState extends State<DashboardAdminPage> {
   Widget _legendItem(String title, Color color) {
     return Row(
       children: [
-        Container(width: 12, height: 12, decoration: BoxDecoration(color: color, shape: BoxShape.circle)),
-        const SizedBox(width: 6),
-        Text(title, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500)),
+        Container(
+          width: 14,
+          height: 14,
+          decoration: BoxDecoration(
+            color: color,
+            shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                color: color.withOpacity(0.3),
+                blurRadius: 4,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(width: 8),
+        Text(
+          title,
+          style: TextStyle(
+            fontSize: 13,
+            fontWeight: FontWeight.w600,
+            color: deepBlue,
+          ),
+        ),
       ],
     );
   }
